@@ -15,11 +15,6 @@ import {
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
 	const initialState: State = {
-		fields: {
-			customerId: "",
-			amount: 0,
-			status: "pending"
-		},
 		message: null,
 		errors: {}
 	};

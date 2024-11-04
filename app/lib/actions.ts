@@ -43,10 +43,7 @@ const FormSchema = z.object({
 	date: z.string()
 });
 
-export type FormValues = z.infer<typeof CreateInvoice>;
-
 export type State = {
-	fields?: FormValues;
 	errors?: {
 		customerId?: string[];
 		amount?: string[];
@@ -66,11 +63,6 @@ export async function createInvoice(prevState: State, formData: FormData) {
 
 	if (!success) {
 		return {
-			fields: {
-				customerId: formData.get("customerId") as string,
-				amount: Number(formData.get("amount")),
-				status: formData.get("status") as "pending" | "paid"
-			},
 			errors: error.flatten().fieldErrors,
 			message: "Missing Fields. Failed to Create Invoice."
 		};
@@ -124,7 +116,7 @@ export async function updateInvoice(
       SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
       WHERE id = ${id}
     `;
-	} catch (error) {
+	} catch {
 		return { message: "Database Error: Failed to Update Invoice." };
 	}
 
